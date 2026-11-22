@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="id">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kelas Kerja Digital | Prototipe</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f0f3f4;color:#152631;font:1rem/1.6 system-ui}header{background:#123440;color:white;padding:1rem max(1rem,calc((100% - 42rem)/2))}header a{color:white}main{max-width:44rem;margin:2rem auto;padding:0 1rem}section{background:white;border:1px solid #a1adb4;padding:clamp(1rem,5vw,2rem)}h1{line-height:1.15}label{display:block;font-weight:bold;margin-top:1rem}input,textarea{display:block;width:100%;font:inherit;padding:.5rem;border:1px solid #465763}button{background:#123440;color:white;font:inherit;padding:.65rem 1rem;margin:.8rem .4rem .2rem 0;border:0;cursor:pointer}a{color:#03585c}:focus-visible{outline:3px solid #bd4b00;outline-offset:4px}.note{border-left:4px solid #497378;padding-left:.8rem}html [hidden]{display:none}
+</style>
+<header><a href="#program">Kelas Kerja Digital</a></header>
+<main>
+<p class="note">Prototipe simulasi. Gunakan data contoh. Formulir ini tidak mengirim atau menyimpan data.</p>
+<section id="program" aria-labelledby="judul-program">
+<h1 id="judul-program" tabindex="-1">Menulis email profesional</h1>
+<p>Kelas keterampilan kerja bagi penyandang disabilitas netra. Pelajari cara menghubungi perekrut dengan email yang ringkas dan sopan.</p>
+<p><strong>Format</strong> · Satu modul teks mandiri dan satu latihan.</p>
+<p><strong>Biaya uji coba</strong> · Gratis bagi peserta melalui subsidi lembaga mitra.</p>
+<a href="#daftar">Daftar kelas</a>
+</section>
+<section id="daftar" aria-labelledby="judul-daftar" hidden>
+<h1 id="judul-daftar" tabindex="-1">Daftar kelas</h1>
+<form data-next="modul">
+<label for="nama">Nama contoh (wajib)</label>
+<input id="nama" required placeholder="Contoh: Peserta A">
+<button>Daftar dan buka modul</button>
+</form>
+<a href="#program">Kembali ke informasi kelas</a>
+</section>
+<section id="modul" aria-labelledby="judul-modul" hidden>
+<h1 id="judul-modul" tabindex="-1">Modul dan latihan</h1>
+<p id="registrasi" class="note" hidden>Pendaftaran simulasi berhasil.</p>
+<p>Gunakan subjek yang jelas, tulis tujuan email di awal, lalu akhiri dengan ucapan terima kasih.</p>
+<p><strong>Contoh subjek:</strong> Permohonan informasi magang administrasi.</p>
+<form data-next="status">
+<label for="latihan">Tulis draf email untuk menanyakan kesempatan magang (wajib)</label>
+<textarea id="latihan" rows="5" required></textarea>
+<button>Kirim latihan</button>
+</form>
+</section>
+<section id="status" aria-labelledby="judul-status" hidden>
+<h1 id="judul-status" tabindex="-1">Latihan terkirim</h1>
+<p>Simulasi umpan balik pengajar. Periksa apakah subjek menyebut tujuan email dan apakah penutup menyertakan ucapan terima kasih.</p>
+<p><a href="#modul">Perbaiki draf latihan</a></p>
+<p><a href="#pendampingan">Minta pendampingan kerja</a></p>
+</section>
+<section id="pendampingan" aria-labelledby="judul-pendampingan" hidden>
+<h1 id="judul-pendampingan" tabindex="-1">Minta pendampingan kerja</h1>
+<p>Simulasikan permintaan untuk membahas persiapan magang atau kerja bersama pendamping.</p>
+<form data-next="selesai">
+<label><input type="checkbox" required style="display:inline;width:auto"> Saya setuju dihubungi pendamping dalam simulasi ini (wajib)</label>
+<button>Kirim permintaan</button>
+</form>
+<a href="#status">Kembali ke umpan balik</a>
+</section>
+<section id="selesai" aria-labelledby="judul-selesai" hidden>
+<h1 id="judul-selesai" tabindex="-1">Permintaan pendampingan terkirim</h1>
+<p>Dalam layanan nyata, pendamping akan menghubungi peserta untuk membahas langkah berikutnya.</p>
+<p><a href="#status">Kembali ke umpan balik</a></p>
+<p><a href="#program">Buka halaman kelas untuk dibagikan</a></p>
+</section>
+</main>
+<script>
+const screens = [...document.querySelectorAll('main section')];
+function showScreen() {
+  const target = screens.find(screen => screen.id === location.hash.slice(1)) || screens[0];
+  for (const screen of screens) screen.hidden = screen !== target;
+  document.title = target.querySelector('h1').textContent + ' | Kelas Kerja Digital';
+  if (location.hash) target.querySelector('h1').focus();
+}
+for (const form of document.querySelectorAll('form[data-next]')) {
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    if (form.dataset.next === 'modul') document.querySelector('#registrasi').hidden = false;
+    location.hash = form.dataset.next;
+  });
+}
+window.addEventListener('hashchange', showScreen);
+showScreen();
+</script>
+</html>
